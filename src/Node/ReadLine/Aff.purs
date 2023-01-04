@@ -61,7 +61,7 @@ setPrompt
   -> RL.Interface
   -> m Unit
 setPrompt promptText interface =
-  liftEffect $ RL.setPrompt promptText (length promptText) interface
+  liftEffect $ RL.setPrompt promptText interface
 
 -- | Read a single line from input using the current prompt.
 prompt
@@ -73,7 +73,7 @@ prompt interface = do
   liftAff $ makeAff go
   where
     go handler = do
-      RL.setLineHandler interface (handler <<< Right)
+      RL.setLineHandler (handler <<< Right) interface
       RL.prompt interface
       pure nonCanceler
 
